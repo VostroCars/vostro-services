@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento - Vostro Lava Jato</title>
+
+    <!-- Importando a fonte Ubuntu -->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Fundo preto */
+            font-family: 'Ubuntu', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            position: relative;
+        }
+
+        /* Logo no canto superior esquerdo */
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .logo-container img {
+            border: 2px solid white;
+            border-radius: 10px;
+            height: 100px;
+            width: 100px;
+        }
+
+        /* Botão de fechar no canto superior direito */
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        /* Container central com cantos arredondados */
+        .container {
+            background-color: #1a1a1a;
+            border-radius: 15px;
+            padding: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            width: 400px; /* Maior largura */
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 30px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        /* Estilo dos campos quando estão em foco (clicados) */
+        input:focus, select:focus {
+            border-color: red; /* Contorno vermelho */
+            transform: scale(1.05); /* Animação de estender do centro */
+        }
+
+        button {
+            background-color: #fff;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, opacity 0.3s ease;
+            border: none;
+            display: none; /* Inicialmente oculto */
+            opacity: 0; /* Inicia invisível para animação de fade-in */
+        }
+
+        button:hover {
+            background-color: #ccc;
+        }
+
+        /* Animação de fade-in para o botão */
+        .fade-in {
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Direitos reservados no rodapé */
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            font-size: 12px;
+            color: #888; /* Cor do texto mais suave */
+        }
+
+        /* Oculta o campo de tipo de lavagem e botão até os campos serem preenchidos */
+        #lavagem-container {
+            display: none;
+            opacity: 0; /* Inicialmente invisível para fade-in */
+            transition: opacity 0.5s ease; /* Animação de fade-in */
+        }
+
+        /* Exibir o botão "Agendar!" quando o tipo de lavagem for escolhido */
+        #submit-button {
+            display: none;
+            opacity: 0; /* Inicia invisível para animação de fade-in */
+        }
+
+        /* Animação de fade-in para o container de lavagem */
+        #lavagem-container.show {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Estilo do select com cantos arredondados */
+        select {
+            border-radius: 30px; /* Cantos arredondados */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botão de fechar no canto superior direito -->
+    <a href="agendamento.html" class="close-button">✖</a>
+
+    <!-- Formulário de agendamento -->
+    <div class="container">
+        <h2>Agende sua lavagem</h2>
+
+        <form action="https://formspree.io/f/xyzyyrrg" method="POST">
+            <!-- Campo de Nome -->
+            <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required oninput="verificarCampos()">
+
+            <!-- Campo de Modelo do Veículo -->
+            <input type="text" id="veiculo" name="veiculo" placeholder="Modelo do veículo" required oninput="verificarCampos()">
+
+            <!-- Campo de Seleção de Lavagem (oculto até nome e veículo serem preenchidos) -->
+            <div id="lavagem-container">
+                <select id="lavagem" name="lavagem" required onchange="mostrarBotao()">
+                    <option value="">Escolha o tipo de lavagem</option>
+                    <option value="Simples">Simples</option>
+                    <option value="Completa">Completa</option>
+                    <option value="Detalhada">Detalhada</option>
+                </select>
+            </div>
+
+            <!-- Botão "Agendar!" (oculto até todos os campos estarem preenchidos) -->
+            <button type="submit" id="submit-button" class="fade-in">Agendar!</button>
+        </form>
+    </div>
+
+    <!-- Direitos reservados no rodapé -->
+    <div class="footer">
+        © 2024 Vostro Lava Jato. Todos os direitos reservados.
+    </div>
+
+    <script>
+        // Função que verifica se os campos de nome e veículo estão preenchidos
+        function verificarCampos() {
+            const nome = document.getElementById('nome').value;
+            const veiculo = document.getElementById('veiculo').value;
+            const lavagemContainer = document.getElementById('lavagem-container');
+
+            // Se ambos os campos estão preenchidos, mostra a seleção de lavagem com fade-in
+            if (nome && veiculo) {
+                lavagemContainer.classList.add('show');
+            } else {
+                lavagemContainer.classList.remove('show');
+                document.getElementById('submit-button').style.display = 'none'; // Oculta o botão caso os campos sejam apagados
+            }
+        }
+
+        // Função que exibe o botão de agendar com fade-in quando a lavagem é escolhida
+        function mostrarBotao() {
+            const lavagem = document.getElementById('lavagem').value;
+            const submitButton = document.getElementById('submit-button');
+
+            if (lavagem) {
+                submitButton.style.display = 'block';
+                submitButton.classList.add('fade-in'); // Aplica animação de fade-in
+            } else {
+                submitButton.style.display = 'none';
+                submitButton.classList.remove('fade-in');
+            }
+        }
+    </script>
+
+</body>
+</html>
+

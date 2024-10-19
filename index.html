@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento de Lavagem - Vostro</title>
+
+    <!-- Importando a fonte Ubuntu do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Configurações globais */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Fundo preto */
+            font-family: 'Ubuntu', sans-serif; /* Fonte Ubuntu */
+            color: white; /* Texto branco */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Estilo da logo */
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .logo-container img {
+            border: 2px solid white; /* Contorno branco */
+            border-radius: 10px; /* Formato mais quadrado */
+            height: 100px; /* Tamanho da logo */
+            width: 100px;
+        }
+
+        /* Estilo dos títulos */
+        h1, h2, h3 {
+            text-align: center;
+            opacity: 0; /* Inicialmente invisível */
+            animation: fadeIn 2s forwards; /* Animação de fade-in */
+        }
+
+        /* Diferentes tempos para o fade-in */
+        h2 {
+            animation-delay: 2s; /* Atraso de 2 segundos para o segundo título */
+        }
+
+        h3 {
+            animation-delay: 4s; /* Atraso de 4 segundos para o terceiro título */
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1; /* Aparece gradualmente */
+            }
+        }
+
+        /* Botões */
+        .button-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Espaço entre os botões */
+        }
+
+        .button {
+            background-color: white; /* Cor do botão */
+            color: black; /* Texto preto */
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 30px; /* Cantos arredondados */
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        /* Animação de pulso */
+        .button:hover {
+            background-color: #ccc; /* Cor do botão ao passar o mouse */
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.7); /* Brilho ao redor do botão */
+        }
+
+        /* Animação de pulso (leve zoom ao passar o mouse) */
+        .button:hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 30px;
+            animation: pulse 1.5s infinite;
+            border: 2px solid rgba(255, 255, 255, 0.5); /* Contorno com brilho leve */
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05); /* Leve aumento de tamanho */
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Direitos reservados no canto inferior */
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            font-size: 12px;
+            color: #888; /* Cor de texto mais suave */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Logo no topo esquerdo -->
+    <div class="logo-container">
+        <img src="logo.jpg" alt="Logo">
+    </div>
+
+    <!-- Títulos com fade-in -->
+    <h1>Bem-vindo(a) ao Vostro!</h1>
+    <h2>O atendimento, que seu carro merece!</h2>
+    <h3>Faça já seu agendamento abaixo!</h3>
+
+    <!-- Botões "Já é cliente?" e "Novo por aqui?" -->
+    <div class="button-container">
+        <button class="button" onclick="novoCliente()">Novo por aqui?</button>
+        <button class="button" onclick="jaCliente()">Já é cliente?</button>
+    </div>
+
+    <!-- Direitos reservados -->
+    <div class="footer">
+        © 2024 Vostro Lava Jato. Todos os direitos reservados.
+    </div>
+
+    <script>
+        // Função para o botão "Novo por aqui?"
+        function novoCliente() {
+            const resposta = confirm("Ficamos felizes em tê-lo por aqui! Vamos fazer seu primeiro atendimento para se familiarizar melhor conosco e tirar suas dúvidas. Redirecionaremos você ao nosso contato pelo WhatsApp para mais detalhes, ok?");
+            
+            if (resposta) {
+                // Redireciona para o WhatsApp
+                window.location.href = "https://wa.me/5519998269211";
+            } 
+            // Se "não" for escolhido, o alerta fecha automaticamente e a tela inicial continua
+        }
+
+        // Função para o botão "Já sou cliente"
+        function jaCliente() {
+            // Redireciona para a página de agendamento
+            window.location.href = "agendar.html";
+        }
+    </script>
+
+</body>
+</html>
+
